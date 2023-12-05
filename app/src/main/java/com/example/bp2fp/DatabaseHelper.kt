@@ -10,15 +10,26 @@ import android.widget.Toast
 class DatabaseHelper(var context:Context):SQLiteOpenHelper(
     context, DATABASE_NAME,null, DATABASE_VERSION) {
 
+
+
     companion object {
+        //Account Table
         private val DATABASE_NAME = "breathe"
-        private val DATABASE_VERSION = 2
+        private val DATABASE_VERSION = 3
         private val TABLE_ACCOUNT = "account"
         private val COLUMN_EMAIL = "email"
         private val COLUMN_NAME = "name"
         private val COLUMN_PASSWORD = "password"
+
+        //News Table
+        private val TABLE_NEWS = "news"
+        private val COLUMN_ID_NEWS = "idNews"
+        private val COLUMN_TITLE = "judulBerita"
+        private val COLUMN_ISI = "isiBerita"
+        private val COLUMN_IMGNEWS = "gambarBerita"
     }
 
+    //CREATE & DROP ACCOUNT TABLE
     private val CREATE_ACCOUNT_TABLE = ("CREATE TABLE " + TABLE_ACCOUNT + "(" +
             COLUMN_EMAIL + " TEXT PRIMARY KEY, " +
             COLUMN_NAME + " TEXT," +
@@ -26,12 +37,24 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
 
     private val DROP_ACCOUNT_TABLE = "DROP TABLE IF EXISTS $TABLE_ACCOUNT"
 
+
+    //CREATE NEWS TABLE
+    private val CREATE_NEWS_TABLE = ("CREATE TABLE " + TABLE_NEWS + "("
+            + COLUMN_ID_NEWS + " INT PRIMARY KEY, "
+            + COLUMN_TITLE + " TEXT, "
+            + COLUMN_ISI + " TEXT, "
+            + COLUMN_IMGNEWS + " BLOB)")
+
+    private val DROP_NEWS_TABLE = "DROP TABLE IF EXISTS $TABLE_NEWS"
+
     override fun onCreate(p0: SQLiteDatabase?) {
         p0?.execSQL(CREATE_ACCOUNT_TABLE)
+        p0?.execSQL(CREATE_NEWS_TABLE)
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         p0?.execSQL(DROP_ACCOUNT_TABLE)
+        p0?.execSQL(DROP_NEWS_TABLE)
         onCreate(p0)
     }
 

@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         val journalFragment=JournalFragment()
         val newsFragment=NewsFragment()
         val sessionFragment=SessionFragment()
+        val communityFragment=CommunityFragment()
 
 
         supportFragmentManager.beginTransaction().apply {
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.journal->currentFragment(journalFragment)
                 R.id.news->currentFragment(newsFragment)
                 R.id.session->currentFragment(sessionFragment)
+                R.id.community->currentFragment(communityFragment)
 
             }
             true
