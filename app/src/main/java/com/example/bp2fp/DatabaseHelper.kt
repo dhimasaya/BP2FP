@@ -93,6 +93,24 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         db.close()
     }
 
+//    fun addBerita(model: NewsModel){
+//        val db = this.writableDatabase
+//        val values = ContentValues()
+//        values.put(COLUMN_ID_NEWS,model.id)
+//        values.put(COLUMN_TITLE,model.title)
+//        values.put(COLUMN_ISI,model.desc)
+//
+//        val byteOutputStream = ByteArrayOutputStream()
+//        val imageByte:ByteArray
+//
+//        model.image.compress(CompressFormat.JPEG,100,byteOutputStream)
+//        imageByte = byteOutputStream.toByteArray()
+//        values.put(COLUMN_IMGNEWS,imageByte)
+//
+//        val result = db.insert(TABLE_NEWS,null, values)
+//        db.close()
+//    }
+
     @SuppressLint("Range")
     fun checkData(email: String): String {
         val columns = arrayOf(COLUMN_NAME)
