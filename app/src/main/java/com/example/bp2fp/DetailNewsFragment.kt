@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.bp2fp.model.NewsModel
 
 private const val ARG_NEWS_IMAGE = "imgNews"
 private const val ARG_NEWS_TITLE = "titleNews"
@@ -24,7 +25,7 @@ class DetailNewsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             newsModel = NewsModel(
-                it.getInt(ARG_NEWS_IMAGE, 0),
+                it.getInt(ARG_NEWS_IMAGE),
                 it.getString(ARG_NEWS_TITLE) ?: "",
                 it.getString(ARG_NEWS_DESC) ?: ""
             )

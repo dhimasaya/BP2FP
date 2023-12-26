@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bp2fp.model.NewsModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +43,8 @@ class NewsFragment : Fragment(), AdapterNews.OnItemClickListener {
         rvNews.layoutManager = LinearLayoutManager(requireContext())
 
         val data = ArrayList<NewsModel>()
-        data.add(NewsModel(R.drawable.profile_pict,"Pentingnya Kesehatan Mental Bagi Remaja", "Kesehatan mental merupakan aspek penting yang seringkali terabaikan dalam kehidupan sehari-hari. Terutama bagi remaja, menjaga kesehatan mental remaja memiliki peranan yang sangat penting untuk memastikan perkembangan yang sehat dan kualitas hidup yang baik. Kali ini membahas secara singkat pentingnya kesehatan mental bagi remaja dan memberikan beberapa tips tentang bagaimana remaja dapat menjaga kesehatan mental remaja dengan baik.\n" +
+        data.add(
+            NewsModel(R.drawable.profile_pict,"Pentingnya Kesehatan Mental Bagi Remaja", "Kesehatan mental merupakan aspek penting yang seringkali terabaikan dalam kehidupan sehari-hari. Terutama bagi remaja, menjaga kesehatan mental remaja memiliki peranan yang sangat penting untuk memastikan perkembangan yang sehat dan kualitas hidup yang baik. Kali ini membahas secara singkat pentingnya kesehatan mental bagi remaja dan memberikan beberapa tips tentang bagaimana remaja dapat menjaga kesehatan mental remaja dengan baik.\n" +
                 "\n" +
                 "Remaja adalah kelompok usia yang rentan mengalami berbagai perubahan emosional dan psikologis yang signifikan. Oleh karena itu, menjaga kesehatan mental remaja menjadi suatu kebutuhan yang mendesak. Kesehatan mental yang baik dapat berkontribusi pada kemampuan remaja dalam menghadapi tekanan, mengatasi masalah, dan menjalin hubungan sosial yang sehat.\n" +
                 "\n" +
@@ -56,7 +58,8 @@ class NewsFragment : Fragment(), AdapterNews.OnItemClickListener {
                 "\n" +
                 "Jika kesehatan mental tidak dijaga dengan baik, remaja berisiko mengalami gangguan mental yang dapat mempengaruhi kehidupan remaja secara negatif. Beberapa ciri-ciri yang mungkin muncul ketika mengalami gangguan mental termasuk perubahan suasana hati yang drastis, kesulitan tidur, kehilangan minat atau motivasi, perubahan berat badan yang signifikan, isolasi sosial, dan kesulitan dalam konsentrasi. Jika remaja mengalami gejala-gejala ini, penting untuk segera mencari bantuan dari profesional kesehatan mental.\n" +
                 "\n" +
-                "Dalam kesimpulan, kesehatan mental merupakan aspek yang sangat penting bagi remaja. Dengan menjaga kesehatan mental remaja dengan baik, remaja dapat menghadapi tantangan hidup dengan lebih baik, menjalin hubungan yang sehat, dan meraih kualitas hidup yang baik. Penting bagi remaja untuk mengenali tanda-tanda gangguan mental dan mencari bantuan jika diperlukan. Dengan dukungan yang tepat, remaja dapat tumbuh dan berkembang secara optimal dalam aspek kesehatan mental remaja."))
+                "Dalam kesimpulan, kesehatan mental merupakan aspek yang sangat penting bagi remaja. Dengan menjaga kesehatan mental remaja dengan baik, remaja dapat menghadapi tantangan hidup dengan lebih baik, menjalin hubungan yang sehat, dan meraih kualitas hidup yang baik. Penting bagi remaja untuk mengenali tanda-tanda gangguan mental dan mencari bantuan jika diperlukan. Dengan dukungan yang tepat, remaja dapat tumbuh dan berkembang secara optimal dalam aspek kesehatan mental remaja.")
+        )
         data.add(NewsModel(R.drawable.icon1,"Berita 2", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum"))
         data.add(NewsModel(R.drawable.icon1,"Berita 3", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum"))
         data.add(NewsModel(R.drawable.icon1,"Berita 4", "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum"))

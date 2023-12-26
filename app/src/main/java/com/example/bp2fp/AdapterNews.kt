@@ -1,6 +1,5 @@
 package com.example.bp2fp
 
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bp2fp.model.NewsModel
 
 class AdapterNews(
     private val listNews: List<NewsModel>, private val onItemClickListener: NewsFragment

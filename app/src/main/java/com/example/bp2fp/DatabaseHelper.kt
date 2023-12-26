@@ -13,9 +13,10 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
 
 
     companion object {
-        //Account Table
         private val DATABASE_NAME = "breathe"
         private val DATABASE_VERSION = 3
+
+        //Account Table
         private val TABLE_ACCOUNT = "account"
         private val COLUMN_EMAIL = "email"
         private val COLUMN_NAME = "name"
@@ -26,7 +27,21 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         private val COLUMN_ID_NEWS = "idNews"
         private val COLUMN_TITLE = "judulBerita"
         private val COLUMN_ISI = "isiBerita"
-        private val COLUMN_IMGNEWS = "gambarBerita"
+        private val COLUMN_IMG_NEWS = "gambarBerita"
+
+        //Journal Table
+        private val TABLE_JOURNAL = "journal"
+        private val COLUMN_ID_JOURNAL = "idJournal"
+        private val COLUMN_TITLE_JOURNAL = "juduLJournal"
+        private val COLUMN_ISI_JOURNAL = "isiJournal"
+
+        //Doctor Table
+        private val TABLE_DOCTOR = "doctor"
+        private val COLUMN_ID_DOCTOR = "idDoctor"
+        private val COLUMN_NAME_DOCTOR = "namaDoctor"
+        private val COLUM_DESC_DOCTOR  = "descDoctor"
+        private val COLUMN_IMG_DOCTOR  = "imgDoctor"
+
     }
 
     //CREATE & DROP ACCOUNT TABLE
@@ -37,24 +52,50 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
 
     private val DROP_ACCOUNT_TABLE = "DROP TABLE IF EXISTS $TABLE_ACCOUNT"
 
-
-    //CREATE NEWS TABLE
+    //CREATE, iNSERT & DROP NEWS TABLE
     private val CREATE_NEWS_TABLE = ("CREATE TABLE " + TABLE_NEWS + "("
             + COLUMN_ID_NEWS + " INT PRIMARY KEY, "
             + COLUMN_TITLE + " TEXT, "
             + COLUMN_ISI + " TEXT, "
-            + COLUMN_IMGNEWS + " BLOB)")
+            + COLUMN_IMG_NEWS + " BLOB)")
 
     private val DROP_NEWS_TABLE = "DROP TABLE IF EXISTS $TABLE_NEWS"
+
+    private val INSERT_NEWS_TABLE = ("INSERT INTO " + TABLE_NEWS + "VALUES ('1', 'TESTING', 'ISI BERITA', '' ")
+
+    //CREATE, INSERT & DROP JOURNAL TABLE
+    private val CREATE_JOURNAL_TABLE = ("CREATE " + TABLE_JOURNAL + "("
+            + COLUMN_ID_JOURNAL + " INT PRIMARY KEY, "
+            + COLUMN_TITLE_JOURNAL + " TEXT, "
+            + COLUMN_ISI_JOURNAL + " TEXT, ")
+
+    private val DROP_JOURNAL_TABLE = "DROP TABLE IF EXISTS $TABLE_JOURNAL"
+
+    //CREATE & DROP DOCTOR TABLE
+    private val CREATE_DOCOTOR_TABLE = ("CREATE TABLE " + TABLE_DOCTOR + "("
+            + COLUMN_ID_DOCTOR + " INT PRIMARY KEY, "
+            + COLUMN_NAME_DOCTOR + " TEXT, "
+            + COLUM_DESC_DOCTOR + " TEXT, "
+            + COLUMN_IMG_DOCTOR + " BLOB)")
+
+    private val DROP_DOCTOR_TABLE = "DROP TABLE IF EXISTS $TABLE_DOCTOR"
+
+    private val INSERT_DOCTOR_TABLE = ("INSERT INTO " + TABLE_NEWS + "VALUES ('1', 'Anna Freud', 'Msc in Arkham Asylum', ''), ")
+
 
     override fun onCreate(p0: SQLiteDatabase?) {
         p0?.execSQL(CREATE_ACCOUNT_TABLE)
         p0?.execSQL(CREATE_NEWS_TABLE)
+        p0?.execSQL(CREATE_JOURNAL_TABLE)
+        p0?.execSQL(INSERT_NEWS_TABLE)
+        p0?.execSQL(CREATE_DOCOTOR_TABLE)
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         p0?.execSQL(DROP_ACCOUNT_TABLE)
         p0?.execSQL(DROP_NEWS_TABLE)
+        p0?.execSQL(DROP_JOURNAL_TABLE)
+        p0?.execSQL(DROP_DOCTOR_TABLE)
         onCreate(p0)
     }
 

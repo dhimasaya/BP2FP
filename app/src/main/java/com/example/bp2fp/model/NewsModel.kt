@@ -1,4 +1,4 @@
-package com.example.bp2fp
+package com.example.bp2fp.model
 
 import android.graphics.Bitmap
 
