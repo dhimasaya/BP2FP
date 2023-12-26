@@ -14,7 +14,7 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
 
     companion object {
         private val DATABASE_NAME = "breathe"
-        private val DATABASE_VERSION = 3
+        private val DATABASE_VERSION = 6
 
         //Account Table
         private val TABLE_ACCOUNT = "account"
@@ -27,7 +27,6 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         private val COLUMN_ID_NEWS = "idNews"
         private val COLUMN_TITLE = "judulBerita"
         private val COLUMN_ISI = "isiBerita"
-        private val COLUMN_IMG_NEWS = "gambarBerita"
 
         //Journal Table
         private val TABLE_JOURNAL = "journal"
@@ -39,8 +38,13 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         private val TABLE_DOCTOR = "doctor"
         private val COLUMN_ID_DOCTOR = "idDoctor"
         private val COLUMN_NAME_DOCTOR = "namaDoctor"
-        private val COLUM_DESC_DOCTOR  = "descDoctor"
-        private val COLUMN_IMG_DOCTOR  = "imgDoctor"
+        private val COLUMN_DESC_DOCTOR  = "descDoctor"
+
+        //Transaction Table
+        private val TABLE_TRANSACTION = "transaksi"
+        private val COLUMN_ID_TRANSACTION = "idTransaksi"
+        private val COLUMN_ID_DOCT = "idDoctor"
+        private val COLUMN_TANGGAL = "tanggal"
 
     }
 
@@ -56,50 +60,53 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
     private val CREATE_NEWS_TABLE = ("CREATE TABLE " + TABLE_NEWS + "("
             + COLUMN_ID_NEWS + " INT PRIMARY KEY, "
             + COLUMN_TITLE + " TEXT, "
-            + COLUMN_ISI + " TEXT, "
-            + COLUMN_IMG_NEWS + " BLOB)")
+            + COLUMN_ISI + " TEXT)")
 
     private val DROP_NEWS_TABLE = "DROP TABLE IF EXISTS $TABLE_NEWS"
 
-    private val INSERT_NEWS_TABLE = ("INSERT INTO " + TABLE_NEWS + "VALUES ('1', 'TESTING', 'ISI BERITA', '' ")
-
     //CREATE, INSERT & DROP JOURNAL TABLE
-    private val CREATE_JOURNAL_TABLE = ("CREATE " + TABLE_JOURNAL + "("
+    private val CREATE_JOURNAL_TABLE = ("CREATE TABLE " + TABLE_JOURNAL + "("
             + COLUMN_ID_JOURNAL + " INT PRIMARY KEY, "
             + COLUMN_TITLE_JOURNAL + " TEXT, "
-            + COLUMN_ISI_JOURNAL + " TEXT, ")
+            + COLUMN_ISI_JOURNAL + " TEXT)")
 
     private val DROP_JOURNAL_TABLE = "DROP TABLE IF EXISTS $TABLE_JOURNAL"
 
     //CREATE & DROP DOCTOR TABLE
-    private val CREATE_DOCOTOR_TABLE = ("CREATE TABLE " + TABLE_DOCTOR + "("
+    private val CREATE_DOCTOR_TABLE = ("CREATE TABLE " + TABLE_DOCTOR + "("
             + COLUMN_ID_DOCTOR + " INT PRIMARY KEY, "
             + COLUMN_NAME_DOCTOR + " TEXT, "
-            + COLUM_DESC_DOCTOR + " TEXT, "
-            + COLUMN_IMG_DOCTOR + " BLOB)")
+            + COLUMN_DESC_DOCTOR + " TEXT)")
 
     private val DROP_DOCTOR_TABLE = "DROP TABLE IF EXISTS $TABLE_DOCTOR"
 
-    private val INSERT_DOCTOR_TABLE = ("INSERT INTO " + TABLE_NEWS + "VALUES ('1', 'Anna Freud', 'Msc in Arkham Asylum', ''), ")
+    //CREATE & DROP TRANSACTION TABLE
+    private val CREATE_TRANSACTION_TABLE = ("CREATE TABLE " + TABLE_TRANSACTION + "("
+            + COLUMN_ID_TRANSACTION + " INT PRIMARY KEY, "
+            + COLUMN_ID_DOCT + " INT, "
+            + COLUMN_TANGGAL + " DATE)")
 
+    private val DROP_TRANSACTION_TABLE = "DROP TABLE IF EXISTS $TABLE_TRANSACTION"
 
-    override fun onCreate(p0: SQLiteDatabase?) {
-        p0?.execSQL(CREATE_ACCOUNT_TABLE)
-        p0?.execSQL(CREATE_NEWS_TABLE)
-        p0?.execSQL(CREATE_JOURNAL_TABLE)
-        p0?.execSQL(INSERT_NEWS_TABLE)
-        p0?.execSQL(CREATE_DOCOTOR_TABLE)
+    override fun onCreate(db: SQLiteDatabase?) {
+        db?.execSQL(CREATE_ACCOUNT_TABLE)
+        db?.execSQL(CREATE_NEWS_TABLE)
+        db?.execSQL(CREATE_JOURNAL_TABLE)
+        db?.execSQL(CREATE_DOCTOR_TABLE)
+        db?.execSQL(CREATE_TRANSACTION_TABLE)
+
     }
 
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        p0?.execSQL(DROP_ACCOUNT_TABLE)
-        p0?.execSQL(DROP_NEWS_TABLE)
-        p0?.execSQL(DROP_JOURNAL_TABLE)
-        p0?.execSQL(DROP_DOCTOR_TABLE)
-        onCreate(p0)
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.execSQL(DROP_ACCOUNT_TABLE)
+        db?.execSQL(DROP_NEWS_TABLE)
+        db?.execSQL(DROP_JOURNAL_TABLE)
+        db?.execSQL(DROP_DOCTOR_TABLE)
+        db?.execSQL(DROP_TRANSACTION_TABLE)
+        onCreate(db)
     }
 
-    fun checkLogin(email: String, password: String): Boolean {
+        fun checkLogin(email: String, password: String): Boolean {
         val colums = arrayOf(COLUMN_EMAIL)
         val db = this.readableDatabase
         val selection = "$COLUMN_EMAIL = ? AND $COLUMN_PASSWORD = ?"
@@ -167,5 +174,52 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         cursor.close()
         db.close()
         return name
+    }
+
+    //DATA DOKTER
+    data class Doctor(val id: Int, val name: String, val description: String)
+
+    val doctorData = listOf(
+        Doctor(1, "Anna Freud", "Msc in Arkham Asylum"),
+        Doctor(2, "John Doe", "PhD in Psychiatry"),
+        Doctor(3, "Jane Smith", "MD in Neurology"),
+        // Add more doctors as needed
+    )
+
+    fun insertDoctorData() {
+        for ((id, name, description) in doctorData) {
+            val values = ContentValues().apply {
+                put(COLUMN_ID_DOCTOR, id)
+                put(COLUMN_NAME_DOCTOR, name)
+                put(COLUMN_DESC_DOCTOR, description)
+            }
+
+            writableDatabase.insert(TABLE_DOCTOR, null, values)
+        }
+    }
+
+    @SuppressLint("Range")
+    fun getDoctors(): List<Doctor> {
+        val doctorList = mutableListOf<Doctor>()
+        val query = "SELECT * FROM $TABLE_DOCTOR"
+
+        val db = readableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID_DOCTOR))
+                val name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DOCTOR))
+                val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESC_DOCTOR))
+
+                val doctor = Doctor(id, name, description)
+                doctorList.add(doctor)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+
+        return doctorList
     }
 }
