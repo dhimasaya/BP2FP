@@ -1,4 +1,3 @@
-// TransactionActivity.kt
 package com.example.bp2fp
 
 import AdapterDoctor
@@ -16,7 +15,6 @@ class TransactionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
 
-        // Retrieve doctor data from intent
         val doctorName = intent.getStringExtra("doctor_name")
         val doctorDescription = intent.getStringExtra("doctor_description")
 
