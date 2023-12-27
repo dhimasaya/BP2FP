@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_doctor"
     android:layout_width="match_parent"
     android:layout_height="175dp"
@@ -54,10 +55,10 @@
             android:id="@+id/descDokter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Msc in Lorem"
-            android:textSize="18dp"
-            android:textColor="@android:color/white"
             android:layout_marginLeft="10dp"
+            android:text="Msc in Lorem"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
             app:layout_constraintStart_toEndOf="@+id/cardViewProfile"
             app:layout_constraintTop_toBottomOf="@+id/namaDokter" />
 
@@ -89,6 +90,26 @@
             app:layout_constraintStart_toEndOf="@+id/btnBooking"
             app:layout_constraintTop_toBottomOf="@+id/cardViewProfile"
             app:layout_constraintVertical_bias="0.3"/>
+
+        <TextView
+            android:id="@+id/hargaSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Harga"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/cardViewProfile"
+            app:layout_constraintTop_toBottomOf="@+id/descDokter" />
+
+        <TextView
+            android:id="@+id/txtSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="per Sesi"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@+id/hargaSession"
+            app:layout_constraintTop_toBottomOf="@+id/descDokter" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

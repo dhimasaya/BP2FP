@@ -14,7 +14,7 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
 
     companion object {
         private val DATABASE_NAME = "breathe"
-        private val DATABASE_VERSION = 6
+        private val DATABASE_VERSION = 7
 
         //Account Table
         private val TABLE_ACCOUNT = "account"
@@ -39,6 +39,7 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         private val COLUMN_ID_DOCTOR = "idDoctor"
         private val COLUMN_NAME_DOCTOR = "namaDoctor"
         private val COLUMN_DESC_DOCTOR  = "descDoctor"
+        private val COLUMN_HARGA_SESSION = "harga"
 
         //Transaction Table
         private val TABLE_TRANSACTION = "transaksi"
@@ -76,7 +77,8 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
     private val CREATE_DOCTOR_TABLE = ("CREATE TABLE " + TABLE_DOCTOR + "("
             + COLUMN_ID_DOCTOR + " INT PRIMARY KEY, "
             + COLUMN_NAME_DOCTOR + " TEXT, "
-            + COLUMN_DESC_DOCTOR + " TEXT)")
+            + COLUMN_DESC_DOCTOR + " TEXT, "
+            + COLUMN_HARGA_SESSION + " INT)")
 
     private val DROP_DOCTOR_TABLE = "DROP TABLE IF EXISTS $TABLE_DOCTOR"
 
@@ -177,21 +179,22 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
     }
 
     //DATA DOKTER
-    data class Doctor(val id: Int, val name: String, val description: String)
+    data class Doctor(val id: Int, val name: String, val description: String, val harga:Int)
 
     val doctorData = listOf(
-        Doctor(1, "Anna Freud", "Msc in Arkham Asylum"),
-        Doctor(2, "John Doe", "PhD in Psychiatry"),
-        Doctor(3, "Jane Smith", "MD in Neurology"),
-        // Add more doctors as needed
+        Doctor(1, "Anna Freud", "Msc in Arkham Asylum", 4000),
+        Doctor(2, "John Doe", "PhD in Psychiatry", 7000),
+        Doctor(3, "Jane Smith", "MD in Neurology", 9000),
+        Doctor(4, "Jamal Adidi", "PhD in Psychiatry", 7000),
     )
 
     fun insertDoctorData() {
-        for ((id, name, description) in doctorData) {
+        for ((id, name, description, harga) in doctorData) {
             val values = ContentValues().apply {
                 put(COLUMN_ID_DOCTOR, id)
                 put(COLUMN_NAME_DOCTOR, name)
                 put(COLUMN_DESC_DOCTOR, description)
+                put(COLUMN_HARGA_SESSION, harga)
             }
 
             writableDatabase.insert(TABLE_DOCTOR, null, values)
@@ -211,8 +214,9 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
                 val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID_DOCTOR))
                 val name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DOCTOR))
                 val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESC_DOCTOR))
+                val harga = cursor.getInt(cursor.getColumnIndex(COLUMN_HARGA_SESSION))
 
-                val doctor = Doctor(id, name, description)
+                val doctor = Doctor(id, name, description, harga)
                 doctorList.add(doctor)
             } while (cursor.moveToNext())
         }

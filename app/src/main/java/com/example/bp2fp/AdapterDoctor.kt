@@ -21,6 +21,7 @@ class AdapterDoctor(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.namaDokter)
         val descTextView: TextView = itemView.findViewById(R.id.descDokter)
+        val hargaTextView : TextView = itemView.findViewById(R.id.hargaSession)
         val btnBooking: Button = itemView.findViewById(R.id.btnBooking)
     }
 
@@ -40,6 +41,7 @@ class AdapterDoctor(
 
         holder.nameTextView.text = currentDoctor.name
         holder.descTextView.text = currentDoctor.description
+        holder.hargaTextView.text = currentDoctor.harga.toString()
 
         // Handle button click for the item at the specified position
         holder.btnBooking.setOnClickListener {

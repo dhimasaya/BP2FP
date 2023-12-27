@@ -46,6 +46,7 @@ class SessionFragment : Fragment(), AdapterDoctor.OnBookingButtonClickListener {
         intent.putExtra("doctor_id", selectedDoctor.id)
         intent.putExtra("doctor_name", selectedDoctor.name)
         intent.putExtra("doctor_description", selectedDoctor.description)
+        intent.putExtra("harga",selectedDoctor.harga)
         startActivity(intent)
     }
 }
