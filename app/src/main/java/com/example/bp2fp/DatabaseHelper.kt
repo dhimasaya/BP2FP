@@ -3,9 +3,12 @@ package com.example.bp2fp
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class DatabaseHelper(var context:Context):SQLiteOpenHelper(
     context, DATABASE_NAME,null, DATABASE_VERSION) {
@@ -45,6 +48,7 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         private val TABLE_TRANSACTION = "transaksi"
         private val COLUMN_ID_TRANSACTION = "idTransaksi"
         private val COLUMN_ID_DOCT = "idDoctor"
+        private val COLUMN_NAMA_DOCT = "namaDoctor"
         private val COLUMN_TANGGAL = "tanggal"
 
     }
@@ -86,6 +90,7 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
     private val CREATE_TRANSACTION_TABLE = ("CREATE TABLE " + TABLE_TRANSACTION + "("
             + COLUMN_ID_TRANSACTION + " INT PRIMARY KEY, "
             + COLUMN_ID_DOCT + " INT, "
+            + COLUMN_NAMA_DOCT + " TEXT, "
             + COLUMN_TANGGAL + " DATE)")
 
     private val DROP_TRANSACTION_TABLE = "DROP TABLE IF EXISTS $TABLE_TRANSACTION"
@@ -226,4 +231,48 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
 
         return doctorList
     }
+
+    fun addTransaction(doctorId: Int) {
+        val dbInsert = this.writableDatabase
+        val dbSelect = this.readableDatabase
+
+        // Declare variables
+        var lastIdTrans = 0
+        var newIdTrans = 0
+        val values = ContentValues()
+
+        val cursorTrans: Cursor = dbSelect.rawQuery(
+            "SELECT * FROM $TABLE_TRANSACTION", null
+        )
+
+        if (cursorTrans.moveToLast()) {
+            lastIdTrans = cursorTrans.getInt(0) // To get id, 0 is the column index
+        }
+
+        newIdTrans = lastIdTrans + 1
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val tanggal = sdf.format(Date())
+
+            // Insert data transaksi
+        values.put(COLUMN_ID_TRANSACTION, newIdTrans)
+        values.put(COLUMN_TANGGAL, tanggal)
+        values.put(COLUMN_ID_DOCT, doctorId)
+
+        val result = dbInsert.insert(TABLE_TRANSACTION, null, values)
+
+        // Show message
+        if (result == (0).toLong()) {
+            Toast.makeText(context, "Add transaction Failed", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Add transaction Success", Toast.LENGTH_SHORT).show()
+        }
+
+        // Close the cursor and database
+        cursorTrans.close()
+        dbInsert.close()
+        dbSelect.close()
+    }
+
+
+
 }

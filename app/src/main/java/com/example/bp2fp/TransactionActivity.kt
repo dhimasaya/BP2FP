@@ -30,12 +30,12 @@ class TransactionActivity : AppCompatActivity() {
         textViewDoctorDescription.text = "$doctorDescription"
 
         buttonPay.setOnClickListener {
-            val intent = Intent(
-                this@TransactionActivity,
-                PaymentActivity::class.java
-            )
-            startActivity(intent)
+            val dbHelper = DatabaseHelper(this@TransactionActivity)
+            val doctorId = intent.getIntExtra("doctor_id", 0)
 
+            dbHelper.addTransaction(doctorId)
+            finish()
         }
+
     }
 }
