@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         //fragment
         val mainFragment=HomeFragment()
-        val journalFragment=JournalFragment()
+        val journalFragment=JournalFragment<Any>()
         val newsFragment=NewsFragment()
         val sessionFragment=SessionFragment()
         val communityFragment=CommunityFragment()
