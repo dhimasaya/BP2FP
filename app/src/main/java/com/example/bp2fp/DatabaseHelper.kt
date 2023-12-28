@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -232,7 +233,7 @@ class DatabaseHelper(var context:Context):SQLiteOpenHelper(
         return doctorList
     }
 
-    fun addTransaction(doctorId: Int) {
+    fun addTransaction(doctorId : Int) {
         val dbInsert = this.writableDatabase
         val dbSelect = this.readableDatabase
 
