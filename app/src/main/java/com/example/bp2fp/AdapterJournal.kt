@@ -30,7 +30,7 @@ class AdapterJournal(
             R.layout.cardnews_layout, parent, false
         )
         return ViewHolder(view)
-    }
+}
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val modelJournal = listJournal[position]
@@ -57,3 +57,4 @@ class AdapterJournal(
         const val limit = 3
     }
 }
+
