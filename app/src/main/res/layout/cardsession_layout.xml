@@ -32,16 +32,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtUpSessionDesc"
+                android:id="@+id/textViewDoctorName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:padding="10dp"
-                android:text="Let’s open up to the things that \nmatter the most "
+                android:text="nama dokter"
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtUpSession" />
+
 
             <Button
                 android:id="@+id/btnBook"
@@ -56,7 +57,7 @@
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtUpSessionDesc"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDoctorName"
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
@@ -66,7 +67,8 @@
                 android:src="@drawable/icon1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtUpSessionDesc"
+
+                app:layout_constraintStart_toEndOf="@+id/txtUpSession"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
