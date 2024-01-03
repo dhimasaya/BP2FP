@@ -16,6 +16,9 @@
             android:name=".PaymentActivity"
             android:exported="false" />
         <activity
+            android:name=".NewJournalActivity"
+            android:exported="false" />
+        <activity
             android:name=".TransactionActivity"
             android:exported="false" />
         <activity
